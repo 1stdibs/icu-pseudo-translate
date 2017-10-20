@@ -1,6 +1,6 @@
 {
   "name": "icu-pseudo-translate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Translate ICU message strings into pseduo-translated ICU message strings.",
   "main": "dist/index.js",
   "author": "Tim Whidden <tim@1stdibs.com>",
