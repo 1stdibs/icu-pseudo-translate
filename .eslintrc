@@ -1,0 +1,8 @@
+{
+    "extends": [
+        "1stdibs",
+        "1stdibs/es6.js",
+        "1stdibs/node.js",
+        "1stdibs/jasmine.js"
+    ]
+}
