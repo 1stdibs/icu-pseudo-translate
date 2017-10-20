@@ -2,7 +2,7 @@ import { oneLine } from 'common-tags';
 import pseudoLetterMap from '../src/lib/pseudoLetterMap';
 import ast from './ast.json';
 import expectedAst from './ast.expected.json';
-import pseudoTranslate, { translateText, transform } from '../dist/index';
+import pseudoTranslate, { translateText, transform } from '../src';
 
 describe('pseudoLetterMap', () => {
     it('is a Map', () => {
@@ -12,8 +12,10 @@ describe('pseudoLetterMap', () => {
 
 describe('translateText fn', () => {
     it('translates text into pseudo translations', () => {
-        const result = translateText(`I'm a string of text! There is some unicode in heré! ôØh Nö!`);
-        expect(result).toBe(`Ì'₥ á ƨƭřïñϱ ôƒ ƭèxƭ! Thèřè ïƨ ƨô₥è úñïçôδè ïñ hèřé! ôØh Nö!`);
+        const test = oneLine`<do not="translate this">translate this!</yup>.
+            There is some unicode in heré! ôØh Nö!`;
+        const result = translateText(test);
+        expect(result).toBe(`<do not="translate this">ƭřáñƨℓáƭè ƭhïƨ!</yup>. Thèřè ïƨ ƨô₥è úñïçôδè ïñ hèřé! ôØh Nö!`);
     });
 });
 

@@ -5,8 +5,12 @@ import plMap from './lib/pseudoLetterMap';
 import print from './lib/print';
 
 export function translateText(text) {
+    let pause = false;
     return text.split('').reduce((str, char) => {
-        if (/[a-zA-Z]/.test(char)) {
+        if (/<|>/.test(char)) {
+            pause = !pause;
+        }
+        if (/[a-zA-Z]/.test(char) && !pause) {
             str += plMap.get(char);
         } else {
             str += char;
