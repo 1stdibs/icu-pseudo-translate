@@ -5,6 +5,20 @@
   "main": "dist/index.js",
   "author": "Tim Whidden <tim@1stdibs.com>",
   "license": "MIT",
+  "homepage": "https://github.com/1stdibs/icu-pseudo-translate",
+  "keywords": [
+    "translation", "pseudo-translation", "icu", "icu-messageformat"
+  ],
+  "engines": {
+    "node": ">=6.10.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1stdibs/icu-pseudo-translate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1stdibs/icu-pseudo-translate/issues"
+  },
   "scripts": {
     "precommit": "yarn run lint",
     "prepublish": "yarn run compile",
