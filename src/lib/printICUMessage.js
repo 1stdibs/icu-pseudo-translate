@@ -1,14 +1,13 @@
 // swiped from https://raw.githubusercontent.com/yahoo/react-intl/master/examples/translations/scripts/lib/printer.js
-// required a couple bug fixes
 const ESCAPED = {
     '\\': '\\\\',
     '\\#': '\\#',
     '{': '\\{',
-    '}': '\\}'
+    '}': '\\}',
 };
 const ESCAPE_REGEX = /\\#|[{}\\]/g;
 
-export default function printICUMessage(ast) {
+export function printICUMessage(ast) {
     return ast.elements.reduce((msg, el) => {
         const { format, id, type, value } = el;
 

@@ -1,28 +1,42 @@
-
 import { parse } from 'intl-messageformat-parser';
+import { DomHandler, Parser } from 'htmlparser2';
+import serializer from 'dom-serializer';
 
-import plMap from './lib/pseudoLetterMap';
-import print from './lib/print';
+import { pseudoLetterMap } from './lib/pseudoLetterMap';
+import { printICUMessage } from './lib/printICUMessage';
+
+function translateDom(domArray) {
+    return domArray.map(node => {
+        if (node.type === 'text') {
+            node.data = node.data
+                .split('')
+                .map(char => pseudoLetterMap.get(char) || char)
+                .join('');
+        }
+        if (node.children) {
+            node.children = translateDom(node.children);
+        }
+        return node;
+    });
+}
 
 export function translateText(text) {
-    let pause = false;
-    return text.split('').reduce((str, char) => {
-        if (/<|>/.test(char)) {
-            pause = !pause;
+    let pseudoText;
+    const handler = new DomHandler((err, domArray) => {
+        if (err) {
+            throw err;
         }
-        if (/[a-zA-Z]/.test(char) && !pause) {
-            str += plMap.get(char);
-        } else {
-            str += char;
-        }
-        return str;
-    }, '');
-};
+        pseudoText = serializer(translateDom(domArray));
+    });
+    const parser = new Parser(handler);
+    parser.parseComplete(text);
+    return pseudoText;
+}
 
 // heavily inspired by:
 // https://github.com/yahoo/react-intl/blob/master/examples/translations/scripts/lib/translator.js
 export function transform(ast) {
-    ast.elements.forEach((el) => {
+    ast.elements.forEach(el => {
         if (el.type === 'messageTextElement') {
             el.value = translateText(el.value);
         } else {
@@ -35,8 +49,8 @@ export function transform(ast) {
     return ast;
 }
 
-export default function pseudoTranslate(msg) {
+export function pseudoTranslate(msg) {
     const ast = parse(msg);
     const translated = transform(ast);
-    return print(translated);
-};
+    return printICUMessage(translated);
+}

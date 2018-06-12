@@ -1,8 +1,8 @@
 import { oneLine } from 'common-tags';
-import pseudoLetterMap from '../src/lib/pseudoLetterMap';
+import { pseudoLetterMap } from '../src/lib/pseudoLetterMap';
 import ast from './ast.json';
 import expectedAst from './ast.expected.json';
-import pseudoTranslate, { translateText, transform } from '../src';
+import { pseudoTranslate, translateText, transform } from '../src';
 
 describe('pseudoLetterMap', () => {
     it('is a Map', () => {
@@ -12,13 +12,13 @@ describe('pseudoLetterMap', () => {
 
 describe('translateText fn', () => {
     it('translates text into pseudo translations', () => {
-        const test = oneLine`<do not="translate this">translate this!</yup>.
-            There is some unicode in heré! ôØh Nö!`;
+        const test = oneLine`Some text <do _not="translate this">Translate <yes>This</yes></do>. There is some unicode in heré! ôØh Nö!`;
         const result = translateText(test);
-        expect(result).toBe(`<do not="translate this">ƭřáñƨℓáƭè ƭhïƨ!</yup>. Thèřè ïƨ ƨô₥è úñïçôδè ïñ hèřé! ôØh Nö!`);
+        expect(result).toBe(
+            `§ô₥è ƭèxƭ <do _not=\"translate this\">Třáñƨℓáƭè <yes>Thïƨ</yes></do>. Thèřè ïƨ ƨô₥è úñïçôδè ïñ hèřé! ôØh Nö!`
+        );
     });
 });
-
 describe('transform fn', () => {
     it('translates only messageTextElements in an ast', () => {
         const result = transform(ast);

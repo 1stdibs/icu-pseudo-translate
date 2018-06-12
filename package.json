@@ -1,51 +1,55 @@
 {
-  "name": "icu-pseudo-translate",
-  "version": "1.1.3",
-  "description": "Translate ICU message strings into pseduo-translated ICU message strings.",
-  "main": "dist/index.js",
-  "author": "Tim Whidden <tim@1stdibs.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/1stdibs/icu-pseudo-translate",
-  "keywords": [
-    "translation",
-    "pseudo-translation",
-    "icu",
-    "icu-messageformat"
-  ],
-  "engines": {
-    "node": ">=6.10.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/1stdibs/icu-pseudo-translate.git"
-  },
-  "bugs": {
-    "url": "https://github.com/1stdibs/icu-pseudo-translate/issues"
-  },
-  "scripts": {
-    "precommit": "yarn run lint",
-    "prepublish": "yarn run compile",
-    "compile": "babel ./src --out-dir ./dist",
-    "lint": "eslint ./src __tests__",
-    "test": "jest"
-  },
-  "dependencies": {
-    "intl-messageformat-parser": "^1.3.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
-    "babel-jest": "^21.2.0",
-    "babel-preset-env": "^1.6.1",
-    "common-tags": "^1.4.0",
-    "eslint": "^4.9.0",
-    "eslint-config-1stdibs": "^3.3.1",
-    "eslint-plugin-flowtype": "^2.39.1",
-    "eslint-plugin-jasmine": "^2.9.1",
-    "eslint-plugin-mocha": "^4.11.0",
-    "eslint-plugin-require-path-exists": "^1.1.7",
-    "husky": "^0.14.3",
-    "jest": "^21.2.1"
-  }
+    "name": "icu-pseudo-translate",
+    "version": "1.1.3",
+    "description": "Translate ICU message strings into pseduo-translated ICU message strings.",
+    "main": "dist/index.js",
+    "author": "Tim Whidden <tim@1stdibs.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/1stdibs/icu-pseudo-translate",
+    "keywords": [
+        "translation",
+        "pseudo-translation",
+        "icu",
+        "icu-messageformat"
+    ],
+    "engines": {
+        "node": ">=6.10.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/1stdibs/icu-pseudo-translate.git"
+    },
+    "bugs": {
+        "url": "https://github.com/1stdibs/icu-pseudo-translate/issues"
+    },
+    "scripts": {
+        "precommit": "yarn run lint",
+        "prepublish": "yarn run compile",
+        "compile": "babel ./src --out-dir ./dist",
+        "lint": "eslint ./src __tests__",
+        "test": "jest"
+    },
+    "dependencies": {
+        "dom-serializer": "^0.1.0",
+        "htmlparser2": "^3.9.2",
+        "intl-messageformat-parser": "^1.3.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.0.1",
+        "babel-jest": "^21.2.0",
+        "babel-preset-env": "^1.6.1",
+        "common-tags": "^1.4.0",
+        "eslint": "^4.10.0",
+        "eslint-config-1stdibs": "^4.2.0",
+        "eslint-plugin-flowtype": "^2.39.1",
+        "eslint-plugin-import": "^2.12.0",
+        "eslint-plugin-jest": "^21.17.0",
+        "eslint-plugin-mocha": "^4.11.0",
+        "eslint-plugin-react": "^7.9.1",
+        "eslint-plugin-require-path-exists": "^1.1.7",
+        "husky": "^0.14.3",
+        "jest": "^21.2.1"
+    }
 }
