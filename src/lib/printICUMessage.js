@@ -7,7 +7,7 @@ const ESCAPED = {
 };
 const ESCAPE_REGEX = /\\#|[{}\\]/g;
 
-export function printICUMessage(ast) {
+function printICUMessage(ast) {
     return ast.elements.reduce((msg, el) => {
         const { format, id, type, value } = el;
 
@@ -48,3 +48,5 @@ export function printICUMessage(ast) {
         return msg;
     }, '');
 }
+
+module.exports = { printICUMessage };

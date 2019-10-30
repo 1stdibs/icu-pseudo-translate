@@ -1,5 +1,5 @@
 // swiped this Map from https://github.com/mr-white/gulp-pseudo-translate-angular-json
-export const pseudoLetterMap = new Map([
+const pseudoLetterMap = new Map([
     ['a', 'á'],
     ['b', 'β'],
     ['c', 'ç'],
@@ -53,3 +53,5 @@ export const pseudoLetterMap = new Map([
     ['Y', 'Ý'],
     ['Z', 'Ž'],
 ]);
+
+module.exports = { pseudoLetterMap };
