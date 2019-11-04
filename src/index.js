@@ -1,9 +1,9 @@
-import { parse } from 'intl-messageformat-parser';
-import { DomHandler, Parser } from 'htmlparser2';
-import serializer from 'dom-serializer';
+const { parse } = require('intl-messageformat-parser');
+const { DomHandler, Parser } = require('htmlparser2');
+const serializer = require('dom-serializer');
 
-import { pseudoLetterMap } from './lib/pseudoLetterMap';
-import { printICUMessage } from './lib/printICUMessage';
+const { pseudoLetterMap } = require('./lib/pseudoLetterMap');
+const { printICUMessage } = require('./lib/printICUMessage');
 
 function translateDom(domArray) {
     return domArray.map(node => {
@@ -20,7 +20,7 @@ function translateDom(domArray) {
     });
 }
 
-export function translateText(text) {
+function translateText(text) {
     let pseudoText;
     const handler = new DomHandler((err, domArray) => {
         if (err) {
@@ -35,7 +35,7 @@ export function translateText(text) {
 
 // heavily inspired by:
 // https://github.com/yahoo/react-intl/blob/master/examples/translations/scripts/lib/translator.js
-export function transform(ast) {
+function transform(ast) {
     ast.elements.forEach(el => {
         if (el.type === 'messageTextElement') {
             el.value = translateText(el.value);
@@ -49,8 +49,14 @@ export function transform(ast) {
     return ast;
 }
 
-export function pseudoTranslate(msg) {
+function pseudoTranslate(msg) {
     const ast = parse(msg);
     const translated = transform(ast);
     return printICUMessage(translated);
 }
+
+module.exports = {
+    translateText,
+    transform,
+    pseudoTranslate,
+};
