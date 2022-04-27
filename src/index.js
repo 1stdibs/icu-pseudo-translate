@@ -1,62 +1,37 @@
-const { parse } = require('intl-messageformat-parser');
-const { DomHandler, Parser } = require('htmlparser2');
-const serializer = require('dom-serializer');
+const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
+const { printAST } = require('@formatjs/icu-messageformat-parser/printer');
 
 const { pseudoLetterMap } = require('./lib/pseudoLetterMap');
-const { printICUMessage } = require('./lib/printICUMessage');
 
-function translateDom(domArray) {
-    return domArray.map(node => {
-        if (node.type === 'text') {
-            node.data = node.data
-                .split('')
-                .map(char => pseudoLetterMap.get(char) || char)
-                .join('');
-        }
-        if (node.children) {
-            node.children = translateDom(node.children);
-        }
-        return node;
-    });
-}
 
 function translateText(text) {
-    let pseudoText;
-    const handler = new DomHandler((err, domArray) => {
-        if (err) {
-            throw err;
-        }
-        pseudoText = serializer(translateDom(domArray));
-    });
-    const parser = new Parser(handler);
-    parser.parseComplete(text);
-    return pseudoText;
+    return (text || '').split('').map(char => pseudoLetterMap.get(char) || char).join('');
 }
 
-// heavily inspired by:
-// https://github.com/yahoo/react-intl/blob/master/examples/translations/scripts/lib/translator.js
-function transform(ast) {
-    ast.elements.forEach(el => {
-        if (el.type === 'messageTextElement') {
+function transform(elements) {
+    for (const el of elements) {
+        if (el.type === TYPE.literal) {
             el.value = translateText(el.value);
-        } else {
-            const options = el.format && el.format.options;
-            if (options) {
-                options.forEach(option => transform(option.value));
+        };
+        if (el.options) {
+            for (const [key, option] of Object.entries(el.options)) {
+                el.options[key].value = transform(option.value);
             }
         }
-    });
-    return ast;
+        if (el.children) {
+            el.children = transform(el.children);
+        }
+    }
+    return elements;
 }
 
 function pseudoTranslate(msg) {
     const ast = parse(msg);
     const translated = transform(ast);
-    return printICUMessage(translated);
+    return printAST(translated);
 }
 
 module.exports = {
-    translateText,
     transform,
     pseudoTranslate,
 };
